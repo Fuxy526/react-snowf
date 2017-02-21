@@ -1,10 +1,11 @@
 {
   "name": "react-snowf",
-  "version": "0.0.1",
-  "description": "React snowflakes component, let it snow on your page! ❄",
-  "main": "dist/snowf.js",
+  "version": "0.0.2",
+  "description": "Snowfall component for React -- Let it snow on your page! ❄",
+  "main": "dist/react-snowf.js",
   "scripts": {
-    "build": "webpack -p"
+    "dev": "webpack-dev-server --inline --hot",
+    "build": "webpack -p --config webpack.build.js"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,11 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "jsx-loader": "^0.13.2",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "react": "^15.4.2"
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   }
 }

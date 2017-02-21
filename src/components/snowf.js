@@ -1,14 +1,6 @@
 import React from 'react';
 
 const {string, number, bool} = React.PropTypes;
-const STYLE = {
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	width: '100%',
-	height: '100%',
-	pointerEvents: 'none'
-};
 
 class Snowf extends React.Component {
 
@@ -19,10 +11,10 @@ class Snowf extends React.Component {
 		wind: number,
 		color: string,
 		opacity: number,
-		swing: bool,
-		swingOffset: number,
+		swing: number,
 		image: string,
-		zIndex: number
+		zIndex: number,
+		resize: bool
 	};
 
 	static defaultProps = {
@@ -32,28 +24,29 @@ class Snowf extends React.Component {
 		wind: 0,
 		color: '#fff',
 		opacity: 0.8,
-		swing: true,
-		swingOffset: 1,
-		image: '',
-		zIndex: 0
+		swing: 1,
+		image: null,
+		zIndex: null,
+		resize: true
 	};
 
 	componentDidMount() {
 
 		const PROPS = this.props;
-		const HEIGHT = this.refs.snowf.offsetHeight;
-		const WIDTH = this.refs.snowf.offsetWidth;
-		const CONTEXT = this.refs.snowf.getContext('2d');
+		const CANVAS = this.refs.canvas;
+		const CONTEXT = CANVAS.getContext('2d');
+		var canvasHeight = CANVAS.offsetHeight;
+		var canvasWidth = CANVAS.offsetWidth;
 		var flakes = [];
 
-		this.refs.snowf.height = HEIGHT;
-		this.refs.snowf.width = WIDTH;
+		CANVAS.height = canvasHeight;
+		CANVAS.width = canvasWidth;
 
 		function init() {
 			for (var i = 0; i < PROPS.amount; i++) {
 				flakes.push({
-					x: random(0, WIDTH),
-					y: random(0, HEIGHT),
+					x: random(0, canvasWidth),
+					y: random(0, canvasHeight),
 					r: random(PROPS.size, PROPS.size * 2) / 2,
 					velX: 0,
 					velY: random(PROPS.speed, PROPS.speed * 2),
@@ -66,7 +59,7 @@ class Snowf extends React.Component {
 
 		function snow() {
 			var img;
-			CONTEXT.clearRect(0, 0, WIDTH, HEIGHT);
+			CONTEXT.clearRect(0, 0, canvasWidth, canvasHeight);
 			for (var i = 0; i < PROPS.amount; i++) {
 				var flake = flakes[i];
 
@@ -87,8 +80,8 @@ class Snowf extends React.Component {
 
 				flake.velX = Math.abs(flake.velX) < Math.abs(PROPS.wind) ? flake.velX + PROPS.wind / 20 : PROPS.wind;
 				flake.y = flake.y + flake.velY * 0.5;
-				flake.x = flake.x + (PROPS.swing ? 0.4 * Math.cos(flake.swing += 0.03) * flake.opacity * PROPS.swingOffset : 0) + flake.velX * 0.5;
-				if (flake.x > WIDTH + flake.r || flake.x < -flake.r || flake.y > HEIGHT + flake.r || flake.y < -flake.r) {
+				flake.x = flake.x + (PROPS.swing ? 0.4 * Math.cos(flake.swing += 0.03) * flake.opacity * PROPS.swing : 0) + flake.velX * 0.5;
+				if (flake.x > canvasWidth + flake.r || flake.x < -flake.r || flake.y > canvasHeight + flake.r || flake.y < -flake.r) {
 					reset(flake);
 				}
 			}
@@ -98,16 +91,16 @@ class Snowf extends React.Component {
 		function reset(flake) {
 			var prevR = flake.r;
 			flake.r = random(PROPS.size, PROPS.size * 2) / 2;
-			if (flake.x > WIDTH + prevR) {
+			if (flake.x > canvasWidth + prevR) {
 				flake.x = -flake.r;
-				flake.y = random(0, HEIGHT);
+				flake.y = random(0, canvasHeight);
 			}
 			else if (flake.x < -prevR) {
-				flake.x = WIDTH + flake.r;
-				flake.y = random(0, HEIGHT);
+				flake.x = canvasWidth + flake.r;
+				flake.y = random(0, canvasHeight);
 			}
 			else {
-				flake.x = random(0, WIDTH);
+				flake.x = random(0, canvasWidth);
 				flake.y = -flake.r;
 			}
 			flake.velX = 0;
@@ -117,13 +110,41 @@ class Snowf extends React.Component {
 		}
 
 		init();
+
+		if (PROPS.resize) {
+			window.addEventListener('resize', function() {
+				var H0 = CANVAS.height,
+						W0 = CANVAS.width,
+						H1 = CANVAS.offsetHeight,
+						W1 = CANVAS.offsetWidth;
+
+				CANVAS.height = canvasHeight = H1;
+				CANVAS.width = canvasWidth = W1;
+				for (var i = 0; i < PROPS.amount; i++) {
+					var flake = flakes[i];
+					flake.x = flake.x / W0 * W1;
+					flake.y = flake.y / H0 * H1;
+				}
+			});
+		}
 	}
 
 	render() {
+		
+		const STYLE = {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			height: '100%',
+			pointerEvents: 'none',
+			zIndex: this.props.zIndex || 'auto'
+		};
+
 		return (
 			<canvas
 				className="snowf-canvas"
-				ref="snowf"
+				ref="canvas"
 				style={ STYLE }
 			>
 			</canvas>
