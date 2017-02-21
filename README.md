@@ -11,7 +11,7 @@
 
 ### Install
 
-#### [npm](https://www.npmjs.com/package/snowf):
+#### [npm](https://www.npmjs.com/package/react-snowf):
 
 ```bash
 npm install react-snowf --save
@@ -30,8 +30,9 @@ import Snowf from 'react-snowf';
   color="#fff"
   opacity={0.8}
   swing={1}
-  image=""
-  zIndex={0}
+  image={null}
+  zIndex={null}
+  resize={true}
 />
 ```
 
