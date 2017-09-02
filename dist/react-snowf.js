@@ -1,5 +1,5 @@
 /*!
- * react-snowf v0.0.2
+ * react-snowf v0.0.3
  * 2017 (c) - Fuxy526
  * Released under the MIT License.
  */

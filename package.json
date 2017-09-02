@@ -1,6 +1,6 @@
 {
   "name": "react-snowf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Snowfall component for React -- Let it snow on your page! ❄",
   "main": "dist/react-snowf.js",
   "scripts": {
