@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const {string, number, bool} = React.PropTypes;
+const {string, number, bool} = PropTypes;
 
 class Snowf extends React.Component {
 

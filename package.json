@@ -1,6 +1,6 @@
 {
   "name": "react-snowf",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Snowfall component for React -- Let it snow on your page! ❄",
   "main": "dist/react-snowf.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }
