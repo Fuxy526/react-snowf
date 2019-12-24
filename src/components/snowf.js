@@ -119,7 +119,7 @@ class Snowf extends React.Component {
         this.update();
     }
 
-    componentWillReceiveProps(props){
+    componentDidUpdate(props){
         if(JSON.stringify(this.props) === JSON.stringify(props)) return;
         this.update(props);
     }
