@@ -142,7 +142,7 @@ class Snowf extends React.Component {
 
     handleResize = () => {
         if(!this.inited) return;
-        var H0 = this.refs.canvas.height,
+        var H0 = this.refs.canvas.scrollHeight,
         W0 = this.refs.canvas.width,
         H1 = this.refs.canvas.offsetHeight,
         W1 = this.refs.canvas.offsetWidth;
