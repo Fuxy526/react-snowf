@@ -1,6 +1,6 @@
 import React from 'react';
-
-const {string, number, bool} = React.PropTypes;
+import PropTypes from 'prop-types';
+const {string, number, bool} = PropTypes;
 
 class Snowf extends React.Component {
 
@@ -119,7 +119,7 @@ class Snowf extends React.Component {
         this.update();
     }
 
-    componentWillReceiveProps(props){
+    componentDidUpdate(props){
         if(JSON.stringify(this.props) === JSON.stringify(props)) return;
         this.update(props);
     }
@@ -142,7 +142,7 @@ class Snowf extends React.Component {
 
     handleResize = () => {
         if(!this.inited) return;
-        var H0 = this.refs.canvas.height,
+        var H0 = this.refs.canvas.scrollHeight,
         W0 = this.refs.canvas.width,
         H1 = this.refs.canvas.offsetHeight,
         W1 = this.refs.canvas.offsetWidth;
